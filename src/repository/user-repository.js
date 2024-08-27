@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const { User } = require("../models/index");
 
 class UserRepository {
@@ -19,6 +18,18 @@ class UserRepository {
           id: userId,
         },
       });
+    } catch (error) {
+      console.log("something went wrong on repository layer");
+      throw error;
+    }
+  }
+
+  async getById(userId){
+    try {
+      const user = await User.findByPk(userId, {
+        attributes: ['email', 'id', 'password']
+      })
+      return user;
     } catch (error) {
       console.log("something went wrong on repository layer");
       throw error;
