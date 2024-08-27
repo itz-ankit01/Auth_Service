@@ -49,7 +49,7 @@ const isAuthenticated = async (req, res) => {
     const response = await userService.isAuthenticated(token);
     return res.status(200).json({
       data: response,
-      message: 'user is authenticated',
+      message: 'user is authenticated, token is valid',
       success: true,
       err: {}
     })
