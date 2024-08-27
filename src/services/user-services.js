@@ -1,8 +1,10 @@
-const  UserRepository = require("../repository/user-repository");
+const UserRepository = require("../repository/user-repository");
 
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 
-const { JWT_KEY } = require('../config/serverConfig')
+const jwt = require("jsonwebtoken");
+
+const { JWT_KEY } = require("../config/serverConfig");
 
 class UserService {
   constructor() {
@@ -21,7 +23,7 @@ class UserService {
 
   createToken(user) {
     try {
-      const result = jwt.sign(user, JWT_KEY, {expiresIn: '1d'});
+      const result = jwt.sign(user, JWT_KEY, { expiresIn: "1d" });
       return result;
     } catch (error) {
       console.log(`something went wrong went in token creation`);
@@ -29,12 +31,21 @@ class UserService {
     }
   }
 
-  verrifyToken(token){
+  verrifyToken(token) {
     try {
       const response = jwt.verify(token, JWT_KEY);
       return response;
     } catch (error) {
       console.log(`something went wrong went in token validation`);
+      throw error;
+    }
+  }
+
+  checkPassword(userInputPlainPassword, encryptedPassword) {
+    try {
+      return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
+    } catch (error) {
+      console.log(`something went wrong went in Password comparison`);
       throw error;
     }
   }
