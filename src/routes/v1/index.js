@@ -8,7 +8,6 @@ const UserController = require("../../controllers/user-controller");
 router.post(
   "/signup",
   AuthRequestValidators.validateUserAuth,
-  AuthRequestValidators.checkPasswordlen,
   UserController.create
 );
 
