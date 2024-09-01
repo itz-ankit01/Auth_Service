@@ -16,6 +16,18 @@ function checkPasswordlen(req, res, next){
             data: {},
             success: false,
             err: 'Password should of atleast 3 character',
+            message: 'Something went wrong',
+        })
+    }
+    next();
+}
+
+const validateisAdminRequest = (req, res, next) => {
+    if(!req.body.id){
+        return res.status(400).json({
+            data: {},
+            success: false,
+            err: 'User id not given',
             message: 'Something went wrong'
         })
     }
@@ -26,5 +38,6 @@ function checkPasswordlen(req, res, next){
 
 module.exports = {
     validateUserAuth,
-    checkPasswordlen
+    checkPasswordlen,
+    validateisAdminRequest
 }
